@@ -2,7 +2,7 @@
 
 Demo link: [https://www.dpmv.me/spacestagram/](https://www.dpmv.me/spacestagram/)
 
-### Web application made for [Shopify's Frontend Development Challenge](https://docs.google.com/document/d/13zXpyrC2yGxoLXKktxw2VJG2Jw8SdUfliLM-bYQLjqE/edit?usp=sharing).
+Web application made for [Shopify's Frontend Development Challenge](https://docs.google.com/document/d/13zXpyrC2yGxoLXKktxw2VJG2Jw8SdUfliLM-bYQLjqE/edit?usp=sharing).
 
 This single-page web app displays the past 30 features from [NASA's Photo of the Day](https://www.nasa.gov/multimedia/imagegallery/iotd.html).
 
