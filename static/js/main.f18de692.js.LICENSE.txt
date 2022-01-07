@@ -11,6 +11,18 @@ object-assign
 */
 
 /*!
+ * Adapted from jQuery UI core
+ *
+ * http://jqueryui.com
+ *
+ * Copyright 2014 jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://api.jqueryui.com/category/ui-core/
+ */
+
+/*!
  * imagesLoaded v4.1.4
  * JavaScript is all like "You images are done yet or what?"
  * MIT License
