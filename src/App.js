@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import styled from 'styled-components';
 import Results from '../src/components/Results';
 import Logo from '../src/img/spacestagram-logo.png';
+import LogoDark from '../src/img/spacestagram-logo-dark.png';
 import Heart from '../src/img/heart.png';
+import DarkMode from '../src/img/dark-mode.png';
+import LightMode from '../src/img/light-mode.png';
 
 const Wrapper = styled.div`
   display: flex;
   min-height: 100vh;
   height: 100%;
   justify-content: center;
-  background-color: #101010;
+  background-color: ${props => props.backgroundColor ? '#101010' : '#fff'};
 `;
 
 const Content = styled.div`
@@ -48,14 +51,16 @@ const SpaceLogo = styled.img`
 
 const Subtitle = styled.p`
   font-size: 18px;
-  color: #bababa;
+  color: ${props => props.color ? 'rgba(255,255,255,0.75)' : '#101010'};
   margin: 16px 0 0 0;
 `;
 
 const LikesDiv = styled.div`
   display: flex;
-  flex-direction: column-reverse;
-  height: 113.97px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 160px;
   @media (max-width: 1280px){
     height: 108px;
   }
@@ -69,6 +74,7 @@ const ViewLikes = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border: ${props => props.color ? '0' : '2px solid #101010'};
   @media (max-width: 1280px){
     max-width: 170px;
   }
@@ -87,25 +93,35 @@ const LikesText = styled.p`
   margin: 10px;
 `;
 
+const LightDarkImg = styled.img`
+  width: 32px;
+  height: auto;
+  cursor: pointer;
+`;
+
 function App() {
+
+  const [darkMode, setDarkMode] = useState(false);
+
   return (
-    <Wrapper>
+    <Wrapper backgroundColor={darkMode}>
       <Content>
         <Header>
           <>
             <Title>
-              <SpaceLogo src={Logo} />
-              <Subtitle>Brought to you by NASA's Astronomy Photo of the Day.</Subtitle>
+              <SpaceLogo src={darkMode ? Logo : LogoDark} />
+              <Subtitle color={darkMode}>A collection of each NASA Photo of the Day from the past month.</Subtitle>
             </Title>
           </>
           <LikesDiv>
-            <ViewLikes>
+            <LightDarkImg src={darkMode ? LightMode : DarkMode} onClick={() => setDarkMode(!darkMode)} />
+            <ViewLikes backgroundColor={darkMode}>
               <HeartImg src={Heart} />
               <LikesText>View likes ({0})</LikesText>
             </ViewLikes>
           </LikesDiv>
         </Header>
-        <Results />
+        <Results darkMode={darkMode} />
       </Content>
     </Wrapper>
   );
