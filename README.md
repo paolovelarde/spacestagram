@@ -28,8 +28,8 @@ Clicking on a post brings up a modal that shows the NASA Photo of the day and so
 
 If the user wishes to see their liked posts they can click on the "View likes" button. This changes the current view to show the users likes, and an empty-state screen if they haven't liked any posts yet.
 
-![likes-empty-light](https://user-images.githubusercontent.com/39651860/148599893-98754255-fad9-4c60-a82a-e7206a6e3837.png)
-![likes-light](https://user-images.githubusercontent.com/39651860/148599894-00a7d769-1916-45a8-9b93-acdb3e08e1a7.png)
+![likes-light](https://user-images.githubusercontent.com/39651860/148607050-59161f9b-cfc0-49e2-a170-06178d377e58.png)
+![likes-empty-light](https://user-images.githubusercontent.com/39651860/148607053-d4f89290-1dc2-404d-ab66-f1a000b2c1bd.png)
 
 ## Extras
 
