@@ -31,6 +31,10 @@ If the user wishes to see their liked posts they can click on the "View likes" b
 ![likes-empty-light](https://user-images.githubusercontent.com/39651860/148599893-98754255-fad9-4c60-a82a-e7206a6e3837.png)
 ![likes-light](https://user-images.githubusercontent.com/39651860/148599894-00a7d769-1916-45a8-9b93-acdb3e08e1a7.png)
 
+## Extras
+
++ Added loading state while waiting for NASA API to return data
+
 ### Notes
 
 This was completed in less than 48 hours, for the purpose of Shopify's internship application.
