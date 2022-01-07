@@ -7,10 +7,13 @@ import Modal from 'react-modal';
 import disableScroll from 'disable-scroll';
 import Heart from '../../src/img/heart-white.png';
 import HeartRed from '../../src/img/heart-red.png';
+import NoLikesImg from '../../src/img/no-likes.png';
+import NoLikesImgDark from '../../src/img/no-likes-dark.png';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   margin: 120px 0 144px 0;
   background-color: rgba(0,0,0,0);
@@ -155,6 +158,19 @@ const CloseText = styled(ImageDate)`
   margin: 0;
 `;
 
+const NoLikes = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  margin: 120px 0 0 150%;
+`;
+
+const NoLikesText = styled(ImageName)`
+  max-width: none;
+`;
+
 const StackGridStyle = {
   width: "100%",
 };
@@ -261,72 +277,72 @@ function Results(props) {
     disableScroll.on();
   };
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  };
-
   function closeModal() {
     setIsOpen(false);
     disableScroll.off();
     setCurrImg({});
   };
 
+  function updateNumLikes(newNumLikes) {
+    props.onNumLikesChange(newNumLikes);
+  };
+
   function addToLikes() {
     if(!likedTitles.has(currImg.title)){
-      let likedImg = {};
       let newlikedTitles = new Set([...likedTitles]);
       let currLikes = [...likes];
-      likedImg.title = currImg.title;
-      likedImg.date = currImg.date;
-      likedImg.explanation = currImg.explanation;
-      likedImg.url = currImg.url;
+      let likedImg = {
+        title: currImg.title,
+        date: currImg.date,
+        explanation: currImg.explanation,
+        url: currImg.url
+      };
       currLikes.push(likedImg);
       setLike(currLikes);
       newlikedTitles.add(currImg.title);
       setLikedTitle(newlikedTitles);
+      updateNumLikes(1);
     }
   };
 
   function removeFromLikes() {
     let currLikes = [];
-    let currLikedTitles = new Set([...likedTitles]);
+    let currLikedTitles = new Set([]);
     for(var i = 0; i < likes.length; i ++){
-      console.log(i);
-      console.log(likes[i].title);
-      if(!likedTitles.has(likes[i].title)) {
+      if(likes[i].title !== currImg.title) {
         currLikes.push(likes[i]);
+        currLikedTitles.add(likes[i].title);
       }
     };
     setLike(currLikes);
-    currLikedTitles.delete(currImg.title);
     setLikedTitle(currLikedTitles);
+    updateNumLikes(-1);
   };
 
   return (
     <Wrapper>
       <Modal
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
       >
-      <ImageExpanded backgroundImg={currImg.url} />
-      <ImageDescDiv>
-        <ImageDesc>
-          <ImageTitle>{currImg.title}</ImageTitle>
-          <ImageDate>{currImg.date}</ImageDate>
-          <ImageDescText>{currImg.explanation}</ImageDescText>
-        </ImageDesc>
-        <LikesDiv>
-          <ViewLikes  onClick={!likedTitles.has(currImg.title) ?  () => addToLikes() : () => removeFromLikes()} backgroundColor={likedTitles.has(currImg.title) ?  '#C14953' : '#101010'}>
-            <HeartImg src={Heart} />
-            <LikesText>
-              {likedTitles.has(currImg.title) ?  'Remove from likes' : 'Add to likes'}
-            </LikesText>
-          </ViewLikes>
-          <CloseText onClick={closeModal}>Close</CloseText>
-        </LikesDiv>
-      </ImageDescDiv>
+        <ImageExpanded backgroundImg={currImg.url} />
+        <ImageDescDiv>
+          <ImageDesc>
+            <ImageTitle>{currImg.title}</ImageTitle>
+            <ImageDate>{currImg.date}</ImageDate>
+            <ImageDescText>{currImg.explanation}</ImageDescText>
+          </ImageDesc>
+          <LikesDiv>
+            <ViewLikes  onClick={!likedTitles.has(currImg.title) ?  () => addToLikes() : () => removeFromLikes()} backgroundColor={likedTitles.has(currImg.title) ?  '#C14953' : '#101010'}>
+              <HeartImg src={Heart} />
+              <LikesText>
+                {likedTitles.has(currImg.title) ?  'Remove from likes' : 'Add to likes'}
+              </LikesText>
+            </ViewLikes>
+            <CloseText onClick={closeModal}>Close</CloseText>
+          </LikesDiv>
+        </ImageDescDiv>
       </Modal>
       {
         allImages.length ?
@@ -335,15 +351,31 @@ function Results(props) {
             style={StackGridStyle}
             gutterWidth={16}
             gutterHeight={24}
-            monitorImagesLoaded
           >
-          {allImages.map((item) => (
-            <ImageResult onClick={() => openModal(item)}>
-              {getImgSize(item.url)}
-              { likedTitles.has(item.title) ? <HeartOnImage src={HeartRed} /> : null}
-              <ImageName color={props.darkMode}>{item.title}</ImageName>
-            </ImageResult>
-          ))}
+          {
+            !props.showLikes ?
+              allImages.map((item) => (
+                <ImageResult onClick={() => openModal(item)}>
+                  {getImgSize(item.url)}
+                  { likedTitles.has(item.title) ? <HeartOnImage src={HeartRed} /> : null}
+                  <ImageName color={props.darkMode}>{item.title}</ImageName>
+                </ImageResult>
+              ))
+          :
+            likes.length >= 1 ?
+            likes.map((item) => (
+              <ImageResult onClick={() => openModal(item)}>
+                {getImgSize(item.url)}
+                { likedTitles.has(item.title) ? <HeartOnImage src={HeartRed} /> : null}
+                <ImageName color={props.darkMode}>{item.title}</ImageName>
+              </ImageResult>
+            ))
+          :
+            <NoLikes>
+              <img src={props.darkMode ? NoLikesImgDark : NoLikesImg} alt='empty clipboard' />
+              <NoLikesText color={props.darkMode}>You currently have no liked images</NoLikesText>
+            </NoLikes>
+          }
         </StackGrid>
         :
         <SkeletonContainer backgroundColor={props.darkMode}>
@@ -352,7 +384,6 @@ function Results(props) {
             style={StackGridStyle}
             gutterWidth={16}
             gutterHeight={16}
-            monitorImagesLoaded
           >
             {renderSkeletons()}
           </StackGrid>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import Results from '../src/components/Results';
 import Logo from '../src/img/spacestagram-logo.png';
@@ -6,6 +6,7 @@ import LogoDark from '../src/img/spacestagram-logo-dark.png';
 import Heart from '../src/img/heart.png';
 import DarkMode from '../src/img/dark-mode.png';
 import LightMode from '../src/img/light-mode.png';
+import ImagesDark from '../src/img/images-dark.png';
 
 const Wrapper = styled.div`
   display: flex;
@@ -102,6 +103,12 @@ const LightDarkImg = styled.img`
 function App() {
 
   const [darkMode, setDarkMode] = useState(false);
+  const [numLikes, setNumLikes] = useState(0);
+  const [showLikes, setShowLikes] = useState(false);
+
+  function updateNumLikes(newNumLikes) {
+    setNumLikes(numLikes + newNumLikes);
+  };
 
   return (
     <Wrapper backgroundColor={darkMode}>
@@ -115,13 +122,13 @@ function App() {
           </>
           <LikesDiv>
             <LightDarkImg src={darkMode ? LightMode : DarkMode} onClick={() => setDarkMode(!darkMode)} />
-            <ViewLikes backgroundColor={darkMode}>
-              <HeartImg src={Heart} />
-              <LikesText>View likes ({0})</LikesText>
+            <ViewLikes onClick={() => setShowLikes(!showLikes)} backgroundColor={darkMode}>
+              <HeartImg src={showLikes ? ImagesDark : Heart} />
+              <LikesText>{showLikes ? 'Return to posts' : 'View likes (' + numLikes + ')'}</LikesText>
             </ViewLikes>
           </LikesDiv>
         </Header>
-        <Results darkMode={darkMode} />
+        <Results showLikes={showLikes} onNumLikesChange={updateNumLikes} darkMode={darkMode} />
       </Content>
     </Wrapper>
   );
