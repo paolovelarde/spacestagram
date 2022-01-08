@@ -24,8 +24,8 @@ const Content = styled.div`
     width: 100%;
     padding: 0 72px;
   }
-  @media (max-width: 768px){
-    padding: 0 64px;
+  @media (max-width: 960px){
+    padding: 0 16px;
   }
 `;
 
@@ -35,8 +35,9 @@ const Header = styled.div`
   width: 100%;
   justify-content: space-between;
   padding: 144px 0 0 0;
-  @media (max-width: 1080px){
+  @media (max-width: 1280px){
     flex-direction: column;
+    padding: 72px 0 0 0;
   }
 `;
 
@@ -48,12 +49,21 @@ const Title = styled.div`
 const SpaceLogo = styled.img`
   width: 295.05px;
   height: 75.98px;
+  @media (max-width: 1280px){
+    width: 196.7px;
+    height: auto;
+  }
 `;
 
 const Subtitle = styled.p`
   font-size: 18px;
   color: ${props => props.color ? 'rgba(255,255,255,0.75)' : '#101010'};
   margin: 16px 0 0 0;
+  @media (max-width: 1280px){
+    font-size: 16px;
+    max-width: 320px;
+    line-height: 1.5em;
+  }
 `;
 
 const LikesDiv = styled.div`
@@ -64,6 +74,8 @@ const LikesDiv = styled.div`
   height: 160px;
   @media (max-width: 1280px){
     height: 108px;
+    flex-direction: row-reverse;
+    justify-content: space-between;
   }
 `;
 
@@ -85,6 +97,10 @@ const HeartImg = styled.img`
   width: 24px;
   height: auto;
   margin: 0 0 0 10px;
+  @media (max-width: 1280px){
+    width: 20px;
+    height: auto;
+  }
 `;
 
 const LikesText = styled.p`
@@ -92,12 +108,19 @@ const LikesText = styled.p`
   color: #101010;
   font-weight: 700;
   margin: 10px;
+  @media (max-width: 1280px){
+    font-size: 16px;
+  }
 `;
 
 const LightDarkImg = styled.img`
   width: 32px;
   height: auto;
   cursor: pointer;
+  @media (max-width: 1280px){
+    width: 24px;
+    height: auto;
+  }
 `;
 
 function App() {

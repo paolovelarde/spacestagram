@@ -17,6 +17,9 @@ const Wrapper = styled.div`
   width: 100%;
   margin: 120px 0 144px 0;
   background-color: rgba(0,0,0,0);
+  @media (max-width: 1280px){
+    margin: 64px 0;
+  }
 `;
 
 const ImageResult = styled.div`
@@ -51,6 +54,10 @@ const ImageName = styled.p`
   margin: 16px 0 0 0;
   line-height: 1.5em;
   width: 300px;
+  @media (max-width: 1280px){
+    width: 100%;
+    font-size: 16px;
+  }
 `;
 
 const SkeletonContainer = styled.div`
@@ -69,6 +76,9 @@ const ImageExpanded = styled.div`
   background-position: center center;
   background-size: cover;
   padding: 0 72px 0 0;
+  @media (max-width: 960px){
+    padding: 0 0 64px 0;
+  }
 `;
 
 const ImageDescDiv = styled.div`
@@ -78,6 +88,12 @@ const ImageDescDiv = styled.div`
   justify-content: center;
   background-color: #fff;
   padding: 78px 36px 42px 36px;
+  @media (max-width: 1280px){
+    padding: 24px;
+  }
+  @media (max-width: 768px){
+    justify-content: space-between;
+  }
 `;
 
 const ImageDesc = styled.div`
@@ -90,6 +106,9 @@ const ImageTitle = styled.p`
   font-weight: 700;
   color: #101010;
   margin: 0 0 16px 0;
+  @media (max-width: 1280px){
+    font-size: 24px;
+  }
 `;
 
 const ImageDate = styled.p`
@@ -97,6 +116,12 @@ const ImageDate = styled.p`
   font-weight: 700;
   color: #6c6c6c;
   margin: 0 0 36px 0;
+  @media (max-width: 1280px){
+    font-size: 16px;
+  }
+  @media (max-width: 768px){
+    margin: 0;
+  }
 `;
 
 const ImageDescText = styled.p`
@@ -104,6 +129,12 @@ const ImageDescText = styled.p`
   color: #101010;
   line-height: 1.5em;
   margin: 0;
+  @media (max-width: 1280px){
+    font-size: 14px;
+  }
+  @media (max-width: 768px){
+    display: none;
+  }
 `;
 
 const LikesDiv = styled.div`
@@ -112,7 +143,12 @@ const LikesDiv = styled.div`
   justify-content: space-between;
   margin-top: 36px;
   @media (max-width: 1280px){
+    margin-top: 16px;
     height: 108px;
+  }
+  @media (max-width: 768px){
+    margin-top: 16px;
+    height: 42px;
   }
 `;
 
@@ -148,6 +184,9 @@ const LikesText = styled.p`
   color: #fff;
   font-weight: 700;
   margin: 10px;
+  @media (max-width: 1280px){
+    font-size: 16px;
+  }
 `;
 
 const CloseText = styled(ImageDate)`
@@ -163,12 +202,16 @@ const NoLikes = styled.div`
   width: 100%;
   flex-direction: column;
   justify-content: center;
-  position: absolute;
   margin: 120px 0 0 150%;
+  @media (max-width: 1280px){
+    margin: 64px 0 0 0;
+  }
 `;
 
 const NoLikesText = styled(ImageName)`
   max-width: none;
+  color: #101010;
+  text-align: center;
 `;
 
 const StackGridStyle = {
@@ -180,23 +223,64 @@ const customStyles = {
     backgroundColor: 'rgba(0,0,0,0.85)',
     zIndex: 1000
   },
-  content: {
-    display: 'flex',
-    flexDirection: 'row',
-    flex: 1,
-    padding: 0,
-    border: 0,
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '1280px',
-    height: 'auto',
-    borderRadius: '24px',
-    backgroundColor: 'rgba(0,0,0,0)',
-  },
+  content: 
+    window.innerWidth >= 1280 
+    ?
+    {
+      display: 'flex',
+      flexDirection: 'row',
+      flex: 1,
+      padding: 0,
+      border: 0,
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '1280px',
+      height: 'auto',
+      borderRadius: '24px',
+      backgroundColor: 'white',
+    }
+    :
+    window.innerWidth >= 960
+    ?
+    {
+      display: 'flex',
+      flexDirection: 'row',
+      flex: 1,
+      padding: 0,
+      border: 0,
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '90%',
+      height: 'auto',
+      borderRadius: '24px',
+      backgroundColor: 'gray',
+    }
+    :
+    {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: 1,
+      padding: 0,
+      border: 0,
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '90%',
+      height: '60%',
+      borderRadius: '24px',
+      backgroundColor: 'black',
+    },
 };
 
 function getStartEnd() {
