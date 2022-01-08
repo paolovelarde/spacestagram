@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import Results from '../src/components/Results';
 import Logo from '../src/img/spacestagram-logo.png';
@@ -24,7 +24,7 @@ const Content = styled.div`
     width: 100%;
     padding: 0 72px;
   }
-  @media (max-width: 960px){
+  @media (max-width: 440px){
     padding: 0 16px;
   }
 `;
@@ -131,7 +131,15 @@ function App() {
 
   function updateNumLikes(newNumLikes) {
     setNumLikes(numLikes + newNumLikes);
+    let localNumLikes = numLikes;
+    localStorage.setItem('numLikes', localNumLikes += newNumLikes);
   };
+
+  useEffect(() => {
+    if(localStorage.getItem('numLikes') !== null){
+      setNumLikes(parseInt(localStorage.getItem('numLikes')));
+    }
+  }, []);
 
   return (
     <Wrapper backgroundColor={darkMode}>

@@ -143,8 +143,8 @@ const LikesDiv = styled.div`
   justify-content: space-between;
   margin-top: 36px;
   @media (max-width: 1280px){
-    margin-top: 16px;
-    height: 108px;
+    margin-top: 36px;
+    height: 42px;
   }
   @media (max-width: 768px){
     margin-top: 16px;
@@ -162,7 +162,7 @@ const ViewLikes = styled.div`
   cursor: pointer;
   max-height: 42px;
   @media (max-width: 1280px){
-    max-width: 170px;
+    max-width: none;
   }
 `;
 
@@ -302,7 +302,9 @@ function Results(props) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [currImg, setCurrImg] = useState({});
   const [likes, setLike] = useState([]);
-  const [likedTitles, setLikedTitle] = useState(new Set([]))
+  const [likedTitles, setLikedTitle] = useState([]);
+  const [localLikes, setLocalLikes] = useLocalStorage('localLikes', []);
+  const [localLikedTitles, setLocalLikedTitles] = useLocalStorage('localLikedTitles', []);
 
   useEffect(() => {
     const getImages = async () => {
@@ -320,6 +322,14 @@ function Results(props) {
     getImages();
   }, []);
 
+  useEffect(() => {
+    if(localStorage.getItem('localLikes') !== null) {
+      setLike(JSON.parse(localStorage.getItem('localLikes')));
+    };
+    if(localStorage.getItem('localLikedTitles') !== null) {
+      setLikedTitle(localStorage.getItem('localLikedTitles'));
+    };
+  }, []);
 
   function renderSkeletons() {
     const Skeletons = [];
@@ -372,8 +382,8 @@ function Results(props) {
   };
 
   function addToLikes() {
-    if(!likedTitles.has(currImg.title)){
-      let newlikedTitles = new Set([...likedTitles]);
+    if(!likedTitles.includes(currImg.title)){
+      let newlikedTitles = [...likedTitles];
       let currLikes = [...likes];
       let likedImg = {
         title: currImg.title,
@@ -383,24 +393,28 @@ function Results(props) {
       };
       currLikes.push(likedImg);
       setLike(currLikes);
-      newlikedTitles.add(currImg.title);
+      newlikedTitles.push(currImg.title);
       setLikedTitle(newlikedTitles);
       updateNumLikes(1);
+      setLocalLikes(currLikes);
+      setLocalLikedTitles(newlikedTitles);
     }
   };
 
   function removeFromLikes() {
     let currLikes = [];
-    let currLikedTitles = new Set([]);
+    let currLikedTitles = [];
     for(var i = 0; i < likes.length; i ++){
       if(likes[i].title !== currImg.title) {
         currLikes.push(likes[i]);
-        currLikedTitles.add(likes[i].title);
+        currLikedTitles.push(likes[i].title);
       }
     };
     setLike(currLikes);
     setLikedTitle(currLikedTitles);
     updateNumLikes(-1);
+    setLocalLikes(currLikes);
+    setLocalLikedTitles(currLikedTitles);
   };
 
   return (
@@ -418,10 +432,10 @@ function Results(props) {
             <ImageDescText>{currImg.explanation}</ImageDescText>
           </ImageDesc>
           <LikesDiv>
-            <ViewLikes  onClick={!likedTitles.has(currImg.title) ?  () => addToLikes() : () => removeFromLikes()} backgroundColor={likedTitles.has(currImg.title) ?  '#C14953' : '#101010'}>
+            <ViewLikes  onClick={!likedTitles.includes(currImg.title) ?  () => addToLikes() : () => removeFromLikes()} backgroundColor={likedTitles.includes(currImg.title) ?  '#C14953' : '#101010'}>
               <HeartImg src={Heart} />
               <LikesText>
-                {likedTitles.has(currImg.title) ?  'Remove from likes' : 'Add to likes'}
+                {likedTitles.includes(currImg.title) ?  'Remove from likes' : 'Add to likes'}
               </LikesText>
             </ViewLikes>
             <CloseText onClick={closeModal}>Close</CloseText>
@@ -441,7 +455,7 @@ function Results(props) {
               allImages.map((item) => (
                 <ImageResult onClick={() => openModal(item)}>
                   {getImgSize(item.url)}
-                  { likedTitles.has(item.title) ? <HeartOnImage src={HeartRed} /> : null}
+                  { likedTitles.includes(item.title) ? <HeartOnImage src={HeartRed} /> : null}
                   <ImageName color={props.darkMode}>{item.title}</ImageName>
                 </ImageResult>
               ))
@@ -450,7 +464,7 @@ function Results(props) {
             likes.map((item) => (
               <ImageResult onClick={() => openModal(item)}>
                 {getImgSize(item.url)}
-                { likedTitles.has(item.title) ? <HeartOnImage src={HeartRed} /> : null}
+                { likedTitles.includes(item.title) ? <HeartOnImage src={HeartRed} /> : null}
                 <ImageName color={props.darkMode}>{item.title}</ImageName>
               </ImageResult>
             ))
@@ -475,6 +489,27 @@ function Results(props) {
       }
     </Wrapper>
   );
+}
+
+function useLocalStorage(key, initialValue) {
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      return initialValue;
+    }
+  });
+  const setValue = (value) => {
+    try {
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+    }
+  };
+  return [storedValue, setValue];
 }
 
 export default Results;
