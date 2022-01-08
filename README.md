@@ -23,7 +23,7 @@ After the images load, the user is shown 30 posts in a grid that can be clicked 
 ![home-light](https://user-images.githubusercontent.com/39651860/148599624-883e7073-4cd6-4434-a2c0-45bd2de497d6.png)
 ![home-dark](https://user-images.githubusercontent.com/39651860/148599634-7fd3f3ef-5535-4e1f-8386-0886940ca17a.png)
 
-Clicking on a post brings up a modal that shows the NASA Photo of the day and some descriptive text on the right. The user can like (or unlike if already liked) this post, which is added to a list.
+Clicking on a post brings up a modal that shows the NASA Photo of the day and some descriptive text on the right. The user can like (or unlike if already liked) this post, which is added to a list. Liked photos are indicated with a heart icon in the top right.
 
 ![modal-light](https://user-images.githubusercontent.com/39651860/148599784-3cbc2b7b-90c9-4062-ba12-96d7c9e43c7f.png)
 ![modal-unliked-light](https://user-images.githubusercontent.com/39651860/148599787-a781b62f-7570-4bf9-ab58-96b2406b3c3e.png)
