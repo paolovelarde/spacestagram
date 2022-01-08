@@ -4,7 +4,9 @@ Demo link: [https://www.dpmv.me/spacestagram/](https://www.dpmv.me/spacestagram/
 
 Web application made for [Shopify's Frontend Development Challenge](https://docs.google.com/document/d/13zXpyrC2yGxoLXKktxw2VJG2Jw8SdUfliLM-bYQLjqE/edit?usp=sharing).
 
-This single-page web app displays the past 30 features from [NASA's Photo of the Day](https://www.nasa.gov/multimedia/imagegallery/iotd.html).
+This single-page web app displays the past 30 features from [NASA's Photo of the Day](https://www.nasa.gov/multimedia/imagegallery/iotd.html). 
+
+Users can like/unlike photos, with selections being saved even when the user leaves/reloads the page.
 
 ### Tech
 
@@ -34,6 +36,7 @@ If the user wishes to see their liked posts they can click on the "View likes" b
 ## Extras
 
 + Added loading state while waiting for NASA API to return data
++ Save likes if the user leaves or reloads the page, implemented through localStorage
 + Added responsiveness (pictured is iPad and iOS)
 
 ![home-ipad](https://user-images.githubusercontent.com/39651860/148633113-27692813-fefb-4423-b4fa-422f19fc594c.png)
