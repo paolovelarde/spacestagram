@@ -34,6 +34,10 @@ If the user wishes to see their liked posts they can click on the "View likes" b
 ## Extras
 
 + Added loading state while waiting for NASA API to return data
++ Added responsiveness (pictured is iPad and iOS)
+
+![home-ipad](https://user-images.githubusercontent.com/39651860/148633113-27692813-fefb-4423-b4fa-422f19fc594c.png)
+![image](https://user-images.githubusercontent.com/39651860/148633131-3213e315-3e54-4d8c-bbe7-cd2d1bd7efe4.png)
 
 ### Notes
 
